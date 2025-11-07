@@ -1,0 +1,16 @@
+# Proyecto Web
+
+Sitio web simple con navegación y categorías.
+
+## Estructura
+- index.html - Página principal
+- pages/ - Páginas secundarias
+- css/ - Estilos
+- assets/ - Recursos (imágenes, etc.)
+
+## Páginas
+- Home
+- About
+- Services
+- Contact
+- 404
