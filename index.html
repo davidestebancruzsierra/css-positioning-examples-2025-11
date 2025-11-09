@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <title>Penguin World</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,7 @@
 
         header {
             background-color: #000;
-            padding: 10px 30px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -32,53 +32,96 @@
         .image-container {
             display: flex;
             align-items: center;
+            margin: 8px 12px;
         }
 
-        .image-box {
-            width: 120px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-        }
-
-        .image-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+        .image-container img {
+            height: 56px;
+            width: auto;
+            display: block;
+            background: none;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            cursor: pointer;
         }
 
         nav {
             display: flex;
-            gap: 30px;
+            gap: 18px;
+            position: relative;
         }
 
         nav a {
             color: #5cb3cc;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 18px;
             transition: color 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         nav a:hover {
-            color: #2ecc71;
+            color: #FF00FF;
         }
 
-        /* MAIN CONTENT */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #111;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            border-radius: 6px;
+            top: 25px;
+            left: 0;
+            z-index: 2000;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 10px;
+            color: #5cb3cc;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #FF00FF;
+            color: #fff;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
         .page {
             display: none;
             min-height: 80vh;
-            padding-top: 70px;
+            padding-top: 84px;
         }
 
         .page.active {
             display: flex;
         }
 
+        .container {
+            display: flex;
+            flex: 1;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
         .main-content {
             flex: 1;
             background-color: #f0f0f0;
             padding: 30px 40px;
+            border-radius: 8px;
         }
 
         .main-content h1 {
@@ -96,13 +139,22 @@
             width: 200px;
             background-color: #2a2a2a;
             padding: 30px 20px;
+            position: sticky;
+            top: 92px;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            border-radius: 8px;
+            border: 1px solid #333;
         }
 
         .sidebar h2 {
             color: #999;
-            font-size: 16px;
+            font-size: 20px;
             margin-bottom: 20px;
             font-weight: 400;
+            border-bottom: 1px solid #5cb3cc;
+            padding-bottom: 8px;
         }
 
         .sidebar ul {
@@ -116,13 +168,14 @@
         .sidebar ul li a {
             color: #5cb3cc;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 18px;
             transition: color 0.3s ease;
             cursor: pointer;
         }
 
         .sidebar ul li a:hover {
-            color: #2ecc71;
+            color: #FF00FF;
+            padding-left: 10px;
         }
 
         footer {
@@ -149,7 +202,7 @@
         }
 
         .footer-links a:hover {
-            color: #2ecc71;
+            color: #FF00FF;
         }
 
         .copyright {
@@ -157,88 +210,391 @@
             color: #888;
             font-size: 12px;
         }
+
+        .welcome-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8fdff 0%, #e3f2fd 100%);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid #4a9fd8;
+        }
+
+        .welcome-container h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-content p {
+            color: #34495e;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .penguin-facts {
+            background-color: #ffffff;
+            padding: 18px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #FF00FF;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .penguin-facts h2 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .penguin-facts ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .penguin-facts li {
+            color: #34495e;
+            padding: 6px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 0.95em;
+        }
+
+        .penguin-facts li:before {
+            content: "🐧";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .cta-section {
+            background: linear-gradient(45deg, #FF00FF, #4a9fd8);
+            padding: 18px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cta-section p {
+            color: white;
+            font-size: 1.1em;
+            margin: 0;
+            text-align: center;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-container:hover {
+            transform: translateY(-3px);
+            transition: transform 0.3s ease;
+        }
+
+        .penguin-facts li:hover {
+            color: #FF00FF;
+            transform: translateX(3px);
+            transition: all 0.3s ease;
+        }
+
+        /* BACK TO TOP BUTTON */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #FF00FF, #4a9fd8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 22px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+
+
+        .sticky-note {
+            background: linear-gradient(135deg,#fffbe6,#fff1c2);
+            color: #222;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e6d89a;
+            margin-bottom: 16px;
+            position: sticky;
+            top: 92px;
+            z-index: 100;
+        }
+
+        /* Sticky small circular back-to-top (bottom-left) - solo visual en home */
+        .sticky-bottom-left {
+            position: sticky;
+            bottom: 20px;              /* se "pega" 20px desde el borde inferior del viewport */
+            display: flex;
+            justify-content: flex-start; /* ubica el botón a la izquierda */
+            padding: 0 20px;           /* separación lateral coherente con layout */
+            z-index: 1100;
+            pointer-events: none;      /* evita bloquear elementos debajo cuando está fuera de vista */
+        }
+
+        .back-to-top-sticky {
+            pointer-events: auto;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(45deg,#FF00FF,#4a9fd8);
+            color: #fff;
+            border: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            cursor: pointer;
+            font-size: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .18s ease, opacity .18s ease;
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .back-to-top-sticky.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top-sticky:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(92,179,204,0.16);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 8px 12px;
+            }
+
+            .page {
+                padding-top: 104px;
+                flex-direction: column;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                order: -1;
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
+
+            .main-content {
+                padding: 25px 20px;
+            }
+
+            .welcome-container {
+                padding: 20px 15px;
+            }
+
+            .welcome-container h1 {
+                font-size: 2em;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .welcome-container h1 {
+                font-size: 1.8em;
+            }
+
+            .welcome-content p {
+                font-size: 1em;
+            }
+
+            .footer-links {
+                gap: 15px;
+            }
+
+            .footer-links a {
+                font-size: 12px;
+            }
+
+            .back-to-top {
+                bottom: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="image-container">
-    <div class="image-box">
-        <img src="assets/pinguinologo.jpg" alt="Penguin Logo" onclick="showPage('home')" style="cursor: pointer;">
-    </div>
-</div>
+            <img src="./assets/pinguinologo.jpg" alt="Penguin Logo" onclick="showPage('home')">
+        </div>
+
         <nav>
             <a onclick="showPage('home')">Home</a>
             <a onclick="showPage('about')">About</a>
-            <a onclick="showPage('services')">Services</a>
+
+            <div class="dropdown">
+                <a onclick="showPage('services')">Services ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">Penguin Tours</a>
+                    <a href="#">Conservation Programs</a>
+                    <a href="#">Educational Workshops</a>
+                    <a href="#">Adoption Program</a>
+                </div>
+            </div>
+
             <a onclick="showPage('contact')">Contact</a>
         </nav>
     </header>
 
-    <!-- PAGE HOME -->
     <div id="home" class="page active">
-        <main class="main-content">
-            <h1>Home Page</h1>
-            <p>Welcome to our website</p>
-        </main>
-        <aside class="sidebar">
-            <h2>Categories</h2>
-            <ul>
-                <li><a href="#">Gardening</a></li>
-                <li><a href="#">Landscaping</a></li>
-                <li><a href="#">Weed Control</a></li>
-                <li><a href="#">Tree Removal</a></li>
-            </ul>
-        </aside>
+        
+
+        <div class="container">
+            <main class="main-content">
+                <div class="welcome-container">
+                    <h1>Welcome to the World of Penguins! 🐧</h1>
+                    
+                    <div class="welcome-content">
+                        <p>Dive into the fascinating universe of these incredible seabirds that have captured the hearts of millions around the world. In our digital sanctuary, we celebrate the majesty, curiosity, and unique charm of penguins.</p>
+                        
+                        <div class="penguin-facts">
+                            <h2>Did you know...?</h2>
+                            <ul>
+                                <li>There are 18 species of penguins in the world</li>
+                                <li>Emperor penguins can dive up to 500 meters deep</li>
+                                <li>They spend up to 75% of their lives in water</li>
+                                <li>They have special glands that filter salt from seawater</li>
+                            </ul>
+                        </div>
+                        
+                        <p>From the frozen lands of Antarctica to the coasts of South Africa and South America, we'll explore together every aspect of their lives: their mating habits, hunting techniques, conservation challenges, and the threats they face in a changing world.</p>
+                        
+                        <p>Whether you're a researcher, conservationist, or simply a lover of these charismatic animals, here you'll find a home where passion for penguins is our common language.</p>
+                        
+                        <div class="cta-section">
+                            <p><strong>Explore, learn, and join our penguin community!</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <aside class="sidebar">
+
+                <h2>Penguin Habitats</h2>
+                <ul>
+                    <li><a href="#">Antarctica</a></li>
+                    <li><a href="#">South America</a></li>
+                    <li><a href="#">Africa</a></li>
+                    <li><a href="#">Oceania</a></li>
+                </ul>
+            </aside>
+        </div>
     </div>
 
-    <!-- PAGE ABOUT -->
     <div id="about" class="page">
-        <main class="main-content">
-            <h1>About Us</h1>
-            <p>We are a professional company dedicated to providing high-quality gardening and landscaping services </p>
-        </main>
-        <aside class="sidebar">
-            <h2>Our Team</h2>
-            <ul>
-                <li><a href="#">Founders</a></li>
-                <li><a href="#">Experts</a></li>
-                <li><a href="#">Partners</a></li>
-            </ul>
-        </aside>
+        <div class="container">
+            <main class="main-content">
+                <h1>About Us</h1>
+                <p>We are a team passionate about penguins, dedicated to their protection, education, and conservation. Our mission is to raise awareness about these amazing creatures and their fragile ecosystems.</p>
+            </main>
+            <aside class="sidebar">
+                <h2>Our Team</h2>
+                <ul>
+                    <li><a href="#">Researchers</a></li>
+                    <li><a href="#">Conservationists</a></li>
+                    <li><a href="#">Volunteers</a></li>
+                    <li><a href="#">Partners</a></li>
+                </ul>
+            </aside>
+        </div>
     </div>
 
-    <!-- PAGE SERVICES -->
     <div id="services" class="page">
-        <main class="main-content">
-            <h1>Our Services</h1>
-            <p>We offer a comprehensive range of professional services to meet all your gardening and landscaping needs.</p>
-        </main>
-        <aside class="sidebar">
-            <h2>Services</h2>
-            <ul>
-                <li><a href="#">Residential Gardening</a></li>
-                <li><a href="#">Commercial Landscaping</a></li>
-                <li><a href="#">Maintenance</a></li>
-                <li><a href="#">Consultation</a></li>
-            </ul>
-        </aside>
+        <div class="container">
+            <main class="main-content">
+                <h1>Our Services</h1>
+                <p>We offer exciting opportunities to learn about and help protect penguins through our specialized programs. Each service is designed to create meaningful connections between people and these incredible birds.</p>
+            </main>
+            <aside class="sidebar">
+                <h2>Penguin Services</h2>
+                <ul>
+                    <li><a href="#">Penguin Tours</a></li>
+                    <li><a href="#">Conservation Programs</a></li>
+                    <li><a href="#">Educational Workshops</a></li>
+                    <li><a href="#">Adoption Program</a></li>
+                </ul>
+            </aside>
+        </div>
     </div>
 
-    <!-- PAGE CONTACT -->
     <div id="contact" class="page">
-        <main class="main-content">
-            <h1>Contact Us</h1>
-            <p>Get in touch with us for any inquiries or to schedule a service. We're here to help!</p>
-        </main>
-        <aside class="sidebar">
-            <h2>Information</h2>
-            <ul>
-                <li><a href="#">Phone</a></li>
-                <li><a href="#">Email</a></li>
-                <li><a href="#">Location</a></li>
-                <li><a href="#">Hours</a></li>
-            </ul>
-        </aside>
+        <div class="container">
+            <main class="main-content">
+                <h1>Contact Us</h1>
+                <p>Get in touch to learn more about our penguin programs or discover how you can contribute to their conservation! We're always happy to hear from fellow penguin enthusiasts.</p>
+            </main>
+            <aside class="sidebar">
+                <h2>Contact Information</h2>
+                <ul>
+                    <li><a href="#">Phone</a></li>
+                    <li><a href="#">Email</a></li>
+                    <li><a href="#">Location</a></li>
+                    <li><a href="#">Business Hours</a></li>
+                </ul>
+            </aside>
+        </div>
     </div>
 
     <footer>
@@ -248,19 +604,32 @@
             <a onclick="showPage('services')">Services</a>
             <a onclick="showPage('contact')">Contact</a>
         </div>
-        <p class="copyright">© 2024 My Website</p>
+        <p class="copyright">© 2024 Penguin World - All rights reserved</p>
     </footer>
 
-    <script>
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
+    <!-- BOTÓN BACK TO TOP -->
+<button class="back-to-top show" id="backToTop" title="Volver arriba">↑</button>
+
+<script>
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    // Funcionalidad del botón "back-to-top"
+    const backToTopButton = document.getElementById('backToTop');
+
+    if (backToTopButton) {
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-            
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-        }
-    </script>
+        });
+    }
+</script>
 </body>
 </html>
